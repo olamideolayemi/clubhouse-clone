@@ -9,7 +9,7 @@ router.post("/createUser", async (req: any, res: any) => {
   try {
     const { username, name, image } = req.body;
 
-    if (!username || !name || !image) {
+    if (!username || !name) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -20,7 +20,7 @@ router.post("/createUser", async (req: any, res: any) => {
       image,
     };
 
-    await client.upsertUsers([newUser]); 
+    await client.upsertUsers([newUser]);
 
     const expiry = Math.floor(Date.now() / 1000) + 60 * 60 * 24;
     const token = client.createToken(username, expiry);
